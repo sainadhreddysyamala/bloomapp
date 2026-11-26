@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const c = require('../controllers/authController');
+const { requireAuth, requireAdmin } = require('../middleware/auth');
+router.post('/register', c.register);
+router.post('/login', c.login);
+router.post('/logout', c.logout);
+router.get('/me', requireAuth, c.me);
+router.get('/registrations', requireAuth, requireAdmin, c.listRegistrations);
+router.patch('/users/:id', requireAuth, requireAdmin, c.updateUser);
+module.exports = router;

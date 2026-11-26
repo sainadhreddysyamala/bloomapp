@@ -1,0 +1,16 @@
+const router = require('express').Router();
+const c = require('../controllers/workersController');
+const { requireAuth, requireAdmin } = require('../middleware/auth');
+router.use(requireAuth);
+router.get('/', c.listWorkers);
+router.post('/', requireAdmin, c.createWorker);
+router.patch('/:id', requireAdmin, c.updateWorker);
+router.delete('/:id', requireAdmin, c.deleteWorker);
+router.get('/report/daily', c.getDailyReport);
+router.get('/report/tiffin', c.getMonthlyTiffinReport);
+router.get('/report/daily.xlsx', c.exportDailyExcel);
+router.post('/record/daily', c.insertDailyRecord);
+router.patch('/record/daily', c.updateDailyRecord);
+router.put('/record/daily', c.saveDailyRecord);
+router.delete('/records/daily', requireAdmin, c.clearDailyRecords);
+module.exports = router;
